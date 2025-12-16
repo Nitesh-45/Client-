@@ -1,0 +1,267 @@
+/* ==========================================
+   BURNER CHAT - GLOBAL STYLES
+   Tailwind CSS + Custom Hacker Aesthetic
+   FULLY RESPONSIVE for Mobile, Tablet, Desktop
+   ==========================================  */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================
+   BASE STYLES
+   ========================================== */
+@layer base {
+
+    /* Global dark background */
+    html {
+        @apply bg-hacker-bg;
+    }
+
+    body {
+        @apply bg-hacker-bg text-gray-100 font-mono antialiased;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(0, 255, 0, 0.02) 0%, transparent 50%);
+        min-height: 100vh;
+        min-height: 100dvh;
+        /* Dynamic viewport height for mobile */
+    }
+
+    /* Prevent overscroll on mobile */
+    html,
+    body {
+        overscroll-behavior: none;
+    }
+
+    /* Custom scrollbar - hacker style */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-hacker-bg;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-hacker-border rounded-full;
+        border: 2px solid transparent;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-neon-green/30;
+    }
+
+    /* Selection highlight */
+    ::selection {
+        @apply bg-neon-green/30 text-neon-green;
+    }
+
+    /* Better tap target for mobile */
+    button,
+    a,
+    input {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Smooth focus for accessibility */
+    *:focus-visible {
+        @apply outline-neon-green outline-offset-2;
+    }
+}
+
+/* ==========================================
+   COMPONENT STYLES
+   ========================================== */
+@layer components {
+
+    /* Primary neon button - responsive padding */
+    .btn-neon {
+        @apply px-4 py-2.5 sm:px-6 sm:py-3 bg-transparent border-2 border-neon-green text-neon-green font-semibold rounded-lg transition-all duration-300 hover:bg-neon-green hover:text-black hover:shadow-neon focus:outline-none focus:ring-2 focus:ring-neon-green/50 active:scale-95 text-sm sm:text-base;
+    }
+
+    /* Ghost button variant - responsive */
+    .btn-ghost {
+        @apply px-3 py-2 sm:px-4 sm:py-2 bg-transparent border border-hacker-border text-gray-400 rounded-lg transition-all duration-200 text-sm hover:border-neon-green/50 hover:text-neon-green focus:outline-none focus:ring-1 focus:ring-neon-green/30;
+    }
+
+    /* Card/container styling - responsive padding */
+    .card-hacker {
+        @apply bg-hacker-surface border border-hacker-border rounded-xl backdrop-blur-sm shadow-lg p-4 sm:p-6;
+    }
+
+    /* Input field styling - responsive */
+    .input-hacker {
+        @apply w-full px-3 py-2.5 sm:px-4 sm:py-3 bg-hacker-bg border border-hacker-border rounded-lg text-gray-100 placeholder-gray-600 font-mono text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-neon-green focus:ring-1 focus:ring-neon-green/30;
+        /* Custom shadow applied via regular CSS to avoid Tailwind arbitrary value issues */
+    }
+
+    .input-hacker:focus {
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    }
+
+    /* Message bubble - own messages - responsive */
+    .message-own {
+        @apply bg-neon-green/10 border border-neon-green/30 text-gray-100 rounded-2xl rounded-br-md px-3 py-2 sm:px-4 sm:py-2 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%];
+    }
+
+    /* Message bubble - others' messages - responsive */
+    .message-other {
+        @apply bg-hacker-card border border-hacker-border text-gray-100 rounded-2xl rounded-bl-md px-3 py-2 sm:px-4 sm:py-2 max-w-[85%] sm:max-w-[75%] lg:max-w-[65%];
+    }
+
+    /* System/activity messages */
+    .message-system {
+        @apply text-center text-xs text-gray-500 py-2 italic;
+    }
+
+    /* Glowing text effect */
+    .text-glow {
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    /* Terminal-style blinking cursor */
+    .cursor-blink::after {
+        content: '▊';
+        @apply text-neon-green animate-typing ml-1;
+    }
+
+    /* Safe area padding for mobile devices with notch */
+    .safe-area-top {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ==========================================
+   UTILITY STYLES
+   ========================================== */
+@layer utilities {
+
+    /* Gradient text */
+    .gradient-text {
+        @apply bg-gradient-to-r from-neon-green via-emerald-400 to-neon-green bg-clip-text text-transparent;
+    }
+
+    /* Subtle grid background pattern */
+    .grid-pattern {
+        background-image:
+            linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+    }
+
+    /* Scanline effect (optional - for extra retro feel) */
+    .scanlines {
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px);
+        pointer-events: none;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Touch-friendly spacing */
+    .touch-spacing {
+        @apply min-h-[44px];
+    }
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Slide in from bottom */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideUp {
+    animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Typing indicator dots */
+@keyframes typingDots {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+}
+
+.typing-dot {
+    animation: typingDots 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* ==========================================
+   RESPONSIVE FIXES
+   ========================================== */
+
+/* Fix for iOS input zoom */
+@media screen and (max-width: 768px) {
+
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .landscape-compact {
+        @apply py-2;
+    }
+}
