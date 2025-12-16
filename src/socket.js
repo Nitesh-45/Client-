@@ -20,15 +20,18 @@ const SOCKET_SERVER_URL = 'https://burner-chat-api-server.onrender.com';
  * Options explained:
  * - autoConnect: false - We manually connect when entering a chat room
  * - reconnection: true - Automatically try to reconnect if disconnected
- * - reconnectionAttempts: 5 - Try 5 times before giving up
+ * - reconnectionAttempts: 10 - Try 10 times before giving up
  * - reconnectionDelay: 1000 - Wait 1 second between attempts
+ * - transports: Start with polling, then upgrade to websocket (better for cloud hosting)
  */
 const socket = io(SOCKET_SERVER_URL, {
-    autoConnect: false,        // Don't connect immediately - we'll connect when joining a room
-    reconnection: true,        // Enable automatic reconnection
-    reconnectionAttempts: 5,   // Number of reconnection attempts
-    reconnectionDelay: 1000,   // Delay between attempts (ms)
-    timeout: 10000,            // Connection timeout (ms)
+    autoConnect: false,           // Don't connect immediately - we'll connect when joining a room
+    reconnection: true,           // Enable automatic reconnection
+    reconnectionAttempts: 10,     // Number of reconnection attempts
+    reconnectionDelay: 1000,      // Delay between attempts (ms)
+    reconnectionDelayMax: 5000,   // Max delay between attempts
+    timeout: 20000,               // Connection timeout (ms) - increased for cold starts
+    transports: ['polling', 'websocket'], // Start with polling, upgrade to websocket
 });
 
 // ==========================================
@@ -45,6 +48,10 @@ socket.on('connect_error', (error) => {
 
 socket.on('disconnect', (reason) => {
     console.log('🔌 Disconnected:', reason);
+    // If server disconnected us, try to reconnect
+    if (reason === 'io server disconnect') {
+        socket.connect();
+    }
 });
 
 socket.on('reconnect', (attemptNumber) => {
@@ -53,6 +60,10 @@ socket.on('reconnect', (attemptNumber) => {
 
 socket.on('reconnect_error', (error) => {
     console.error('❌ Reconnection error:', error.message);
+});
+
+socket.on('reconnect_failed', () => {
+    console.error('❌ Reconnection failed after all attempts');
 });
 
 export default socket;
